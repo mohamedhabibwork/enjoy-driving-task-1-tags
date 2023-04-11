@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tag extends Model
 {
@@ -12,16 +12,21 @@ class Tag extends Model
 
     protected $fillable = ['name'];
 
-    /**
-     * @return BelongsToMany|Resource[]
-     */
-    public function resources(): BelongsToMany
+    public function resources(): MorphToMany
     {
-        return $this->belongsToMany(
-            related: Resource::class,
-            table: 'resource_tag',
-            foreignPivotKey: 'tag_id',
-            relatedPivotKey: 'resource_id'
-        )->withTimestamps();
+        return $this->morphedByMany(related: Resource::class, name: 'taggable')
+            ->withTimestamps();
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphedByMany(related: Tag::class, name: 'taggable')
+            ->withTimestamps();
+    }
+
+    public function posts(): MorphToMany
+    {
+        return $this->morphedByMany(related: Post::class, name: 'taggable')
+            ->withTimestamps();
     }
 }

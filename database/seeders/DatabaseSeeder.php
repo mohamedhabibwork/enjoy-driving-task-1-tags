@@ -19,10 +19,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123456789')
         ]);
 
-        $this->call(class: [
-            ResourceSeeder::class,
-            TagSeeder::class,
-        ]);
+        $this->call(class: [TagSeeder::class]);
 
     }
 }

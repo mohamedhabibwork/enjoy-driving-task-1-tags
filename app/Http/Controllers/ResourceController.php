@@ -17,9 +17,12 @@ class ResourceController extends Controller
 
         $resources = Resource::whereHas('tags', function ($query) use ($tags) {
             $query->whereIn('tags.id', $tags->toArray());
-        },'>=',$tags->count())->with('tags')->get();
+        },'>=',$tags->count())
+            ->with('tags')->get();
 
-        $relatedTags = $resources->flatMap(fn($resource) => $resource->tags->whereNotIn('id', $tags->toArray()))->unique('id')->values();
+        $relatedTags = $resources->flatMap(fn($resource) => $resource->tags->whereNotIn('id', $tags->toArray()))
+            ->unique('id')
+            ->values();
         $tags = Tag::all();
         return view('resources.index', compact('resources', 'tags', 'relatedTags'));
     }
@@ -43,4 +46,3 @@ class ResourceController extends Controller
         return back()->with('success', 'Resource saved!');
     }
 }
-//enjoy-driving-task-1-tags

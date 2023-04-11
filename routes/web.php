@@ -27,6 +27,9 @@ Route::prefix('dashboard')->group(function () {
     Route::resource('tags', TagController::class)->only([
         'index', 'store',
     ]);
+
+    Route::get('tags/search', [TagController::class, 'search'])->name('tags.search');
+
     Route::resource('resources', ResourceController::class)->only([
         'index', 'store',
     ]);

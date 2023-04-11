@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Post;
 use App\Models\Resource;
 use App\Models\Tag;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,8 +15,17 @@ class TagSeeder extends Seeder
      */
     public function run(): void
     {
-        Tag::factory(count: 10)
-            ->hasAttached(factory: Resource::factory())
+        $count = 10;
+        Tag::factory(count: $count)
+            ->hasAttached(factory: Resource::factory($count)->hasAttached(
+                factory: Tag::factory(),
+                relationship: 'tags'
+            ),relationship: 'resources')
+            ->hasAttached(factory: Tag::factory($count),relationship: 'tags')
+            ->hasAttached(factory: Post::factory($count)->hasAttached(
+                factory: Tag::factory(),
+                relationship: 'tags'
+            ),relationship: 'posts')
             ->create();
     }
 }

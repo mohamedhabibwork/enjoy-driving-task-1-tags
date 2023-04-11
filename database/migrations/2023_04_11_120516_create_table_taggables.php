@@ -9,11 +9,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('resource_tag', function (Blueprint $table) {
+        Schema::create('taggables', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Resource::class, 'resource_id')
-                ->constrained()
-                ->CascadeonDelete();
+            $table->morphs('taggable');
             $table->foreignIdFor(Tag::class, 'tag_id')
                 ->constrained()
                 ->CascadeonDelete();
@@ -23,6 +21,6 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::dropIfExists('resource_tag');
+        Schema::dropIfExists('taggables');
     }
 };

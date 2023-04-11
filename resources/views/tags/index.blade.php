@@ -89,7 +89,7 @@
                             </form>
                         </x-modal>
                     </section>
-                    <form class="px-6 pt-4 pb-2" method="get" action="{{ route('resources.index') }}">
+                    <form class="px-6 pt-4 pb-2" method="get" action="{{ route('tags.search') }}">
                         @foreach($tags as $tag)
                             <div class="inline-block w-32">
                                 <input type="checkbox" id="{{  $id = str($tag)->slug() }}" value="{{ $tag->id }}"

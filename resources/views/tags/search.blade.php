@@ -47,64 +47,7 @@
                             <h2 class="flex text-lg font-medium text-gray-900 dark:text-gray-100">
                                 {{ __('Resources') }}
                             </h2>
-
-                            <x-primary-button
-                                x-data=""
-                                class="flex"
-                                x-on:click.prevent="$dispatch('open-modal', 'create-resources')"
-                            >{{ __('Create Resource') }}</x-primary-button>
-
                         </header>
-                        <x-modal name="create-resources" :show="$errors->isNotEmpty()" focusable>
-                            <form method="post" action="{{ route('resources.store') }}" class="p-6">
-                                @csrf
-
-                                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {{ __('Create Resources') }}
-                                </h2>
-
-                                <div class="mt-6">
-                                    <x-input-label for="name" value="{{ __('Name') }}" class="sr-only"/>
-
-                                    <x-text-input
-                                        id="name"
-                                        name="name"
-                                        type="text"
-                                        class="mt-1 block w-3/4"
-                                        placeholder="{{ __('Name') }}"
-                                    />
-
-                                    <x-input-error :messages="$errors->get('name')" class="mt-2"/>
-                                </div>
-                                <div class="mt-6">
-                                    <x-input-label for="name" value="{{ __('Name') }}" class="sr-only"/>
-
-                                    <select
-                                        id="tags"
-                                        multiple
-                                        name="tags[]"
-                                        type="text"
-                                        class="mt-1 block w-3/4"
-                                    >
-                                        @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    <x-input-error :messages="$errors->get('name')" class="mt-2"/>
-                                </div>
-
-                                <div class="mt-6 flex justify-end">
-                                    <x-secondary-button x-on:click="$dispatch('close')">
-                                        {{ __('Cancel') }}
-                                    </x-secondary-button>
-
-                                    <x-primary-button class="ml-3">
-                                        {{ __('Create') }}
-                                    </x-primary-button>
-                                </div>
-                            </form>
-                        </x-modal>
                     </section>
                 </div>
             </div>
@@ -138,7 +81,7 @@
                     <div class="w-full mb-2">
                         <div class=" rounded-lg bg-gray-800 overflow-hidden shadow-lg">
                             <div class="px-6 py-4">
-                                <div class="font-bold dark:text-white text-xl mb-2">{{ $resource->name }}</div>
+                                <div class="font-bold dark:text-white text-xl mb-2">{{ $resource->name }} <span class="bg-red-200 rounded-full px-3 py-1 text-sm font-semibold text-red-700 mr-2 mb-2">{{ class_basename($resource) }}</span></div>
                             </div>
                             <div class="px-6 pt-4 pb-2">
                                 @foreach($resource->tags as $tag)
